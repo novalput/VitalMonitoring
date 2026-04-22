@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Real-time environmental air quality monitoring dashboard — tracks PM 2.5, temperature, humidity, and CO2 levels.">
-    <title>Environmental Overview Dashboard</title>
+    <meta name="description" content="ICU Patient Monitoring Dashboard — Real-time tracking of Heart Rate, SpO2, Body Temperature, and Blood Pressure.">
+    <title>Patient Vital Monitoring | ICU Central</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,10 +48,10 @@
 
         <!-- ── Header ──────────────────────────────────────────── -->
         <header class="mb-10 animate-[fadeInDown_0.8s_ease-out]">
-            <h1 class="font-['Outfit'] text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-900 to-blue-500 dark:from-white dark:to-blue-300 bg-clip-text text-transparent mb-1"
-                id="t-title">Environmental Overview</h1>
+            <h1 class="font-['Outfit'] text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-red-600 to-blue-500 dark:from-white dark:to-red-300 bg-clip-text text-transparent mb-1"
+                id="t-title">Patient Vital Monitoring</h1>
             <div class="subtitle text-sm font-semibold text-emerald-500 tracking-[1.5px] flex items-center gap-2 uppercase"
-                id="t-subtitle">REAL-TIME MONITORING ACTIVE</div>
+                id="t-subtitle">ICU UNIT 04 - CENTRAL SYSTEM ACTIVE</div>
         </header>
 
         <!-- ── Sensor Cards ────────────────────────────────────── -->
@@ -62,21 +62,21 @@
                 class="bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-6 flex flex-col shadow relative overflow-hidden opacity-0 animate-[fadeInUp_0.8s_ease-out_0.1s_forwards] hover:-translate-y-[5px] hover:shadow-[0_10px_25px_rgba(59,130,246,0.15)] hover:bg-white dark:hover:bg-[rgba(30,58,138,0.4)] transition-[box-shadow,background-color,border-color,transform] duration-300 cursor-default">
 
                 <div class="flex justify-between items-start mb-4">
-                    <div class="text-[2rem] leading-none text-blue-500 dark:text-blue-400 bg-blue-500/10 p-3 rounded-2xl">
-                        <i class="ph ph-gauge"></i>
+                    <div class="text-[2rem] leading-none text-red-500 dark:text-red-400 bg-red-500/10 p-3 rounded-2xl">
+                        <i class="ph ph-heartbeat"></i>
                     </div>
                     <div class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white"
                         title="Normal"></div>
                 </div>
 
-                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-aq-title">Air Quality</div>
+                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-aq-title">Heart Rate</div>
 
                 <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
-                    <span id="val-aq">45.2</span>
-                    <span class="text-base text-slate-500 dark:text-slate-400 font-medium">PPM</span>
+                    <span id="val-aq">72</span>
+                    <span class="text-base text-slate-500 dark:text-slate-400 font-medium">BPM</span>
                 </div>
 
-                <div class="text-sm font-medium text-emerald-500" id="t-aq-desc">Optimal Range</div>
+                <div class="text-sm font-medium text-emerald-500" id="t-aq-desc">Normal Sinus</div>
             </div>
 
             <!-- Card 2: Temperature -->
@@ -84,21 +84,21 @@
                 class="bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-6 flex flex-col shadow relative overflow-hidden opacity-0 animate-[fadeInUp_0.8s_ease-out_0.2s_forwards] hover:-translate-y-[5px] hover:shadow-[0_10px_25px_rgba(59,130,246,0.15)] hover:bg-white dark:hover:bg-[rgba(30,58,138,0.4)] transition-[box-shadow,background-color,border-color,transform] duration-300 cursor-default">
 
                 <div class="flex justify-between items-start mb-4">
-                    <div class="text-[2rem] leading-none text-blue-500 dark:text-blue-400 bg-blue-500/10 p-3 rounded-2xl">
+                    <div class="text-[2rem] leading-none text-orange-500 dark:text-orange-400 bg-orange-500/10 p-3 rounded-2xl">
                         <i class="ph ph-thermometer"></i>
                     </div>
                     <div class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white"
                         title="Normal"></div>
                 </div>
 
-                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-temp-title">Temperature</div>
+                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-temp-title">Body Temp</div>
 
                 <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
-                    <span id="val-temp">22.5</span>
+                    <span id="val-temp">36.5</span>
                     <span class="text-base text-slate-500 dark:text-slate-400 font-medium">°C</span>
                 </div>
 
-                <div class="text-sm font-medium text-blue-500 dark:text-blue-400" id="t-temp-desc">Stable Ambient</div>
+                <div class="text-sm font-medium text-blue-500 dark:text-blue-400" id="t-temp-desc">Stable</div>
             </div>
 
             <!-- Card 3: Humidity -->
@@ -106,21 +106,21 @@
                 class="bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-6 flex flex-col shadow relative overflow-hidden opacity-0 animate-[fadeInUp_0.8s_ease-out_0.3s_forwards] hover:-translate-y-[5px] hover:shadow-[0_10px_25px_rgba(59,130,246,0.15)] hover:bg-white dark:hover:bg-[rgba(30,58,138,0.4)] transition-[box-shadow,background-color,border-color,transform] duration-300 cursor-default">
 
                 <div class="flex justify-between items-start mb-4">
-                    <div class="text-[2rem] leading-none text-blue-500 dark:text-blue-400 bg-blue-500/10 p-3 rounded-2xl">
-                        <i class="ph ph-drop"></i>
+                    <div class="text-[2rem] leading-none text-cyan-500 dark:text-cyan-400 bg-cyan-500/10 p-3 rounded-2xl">
+                        <i class="ph ph-lungs"></i>
                     </div>
                     <div class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white"
                         title="Normal"></div>
                 </div>
 
-                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-hum-title">Humidity</div>
+                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-hum-title">SpO2</div>
 
                 <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
-                    <span id="val-hum">62</span>
+                    <span id="val-hum">98</span>
                     <span class="text-base text-slate-500 dark:text-slate-400 font-medium">%</span>
                 </div>
 
-                <div class="text-sm font-medium text-emerald-500" id="t-hum-desc">Optimal Range</div>
+                <div class="text-sm font-medium text-emerald-500" id="t-hum-desc">Optimal Saturation</div>
             </div>
 
             <!-- Card 4: CO2 Levels (Critical) -->
@@ -129,21 +129,21 @@
 
                 <div class="flex justify-between items-start mb-4">
                     <div id="co2-icon" class="text-[2rem] leading-none text-red-400 bg-red-500/10 p-3 rounded-2xl">
-                        <i class="ph ph-warning-octagon"></i>
+                        <i class="ph ph-activity"></i>
                     </div>
                     <div id="co2-status-dot"
                         class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-red-500 text-red-500 animate-[flash_1.5s_infinite]"
                         title="Critical"></div>
                 </div>
 
-                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-co2-title">CO2 Levels</div>
+                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-co2-title">Blood Pressure</div>
 
                 <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
-                    <span id="val-co2">850</span>
-                    <span class="text-base text-slate-500 dark:text-slate-400 font-medium">PPM</span>
+                    <span id="val-co2">145/95</span>
+                    <span class="text-base text-slate-500 dark:text-slate-400 font-medium">mmHg</span>
                 </div>
 
-                <div class="text-sm font-medium text-red-500" id="t-co2-desc">Critical Alert</div>
+                <div class="text-sm font-medium text-red-500" id="t-co2-desc">Hypertensive Alert</div>
             </div>
 
         </div><!-- /cards-grid -->
@@ -207,7 +207,7 @@
                 data: {
                     labels: hours,
                     datasets: [{
-                        label: 'PM 2.5 (PPM)',
+                        label: 'Heart Rate (BPM)',
                         data: dataPoints,
                         borderColor: chartColors.borderColor,
                         backgroundColor: chartColors.gradient,
@@ -235,7 +235,7 @@
                             padding: 12,
                             displayColors: false,
                             callbacks: {
-                                label: (ctx) => `${ctx.parsed.y} PPM`,
+                                label: (ctx) => `${ctx.parsed.y} BPM`,
                             },
                         },
                     },
@@ -293,36 +293,36 @@
                 en: {
                     theme_light:      'Light',
                     theme_dark:       'Dark',
-                    title:            'Environmental Overview',
-                    subtitle:         'REAL-TIME MONITORING ACTIVE',
-                    aq_title:         'Air Quality',
-                    aq_desc:          'Optimal Range',
-                    temp_title:       'Temperature',
-                    temp_desc:        'Stable Ambient',
-                    hum_title:        'Humidity',
-                    hum_desc:         'Optimal Range',
-                    co2_title:        'CO2 Levels',
-                    co2_desc_critical:'Critical Alert',
-                    co2_desc_stable:  'Stable Range',
-                    chart_title:      '24-Hour Air Quality Trend',
-                    sensor:           'SENSOR NODE: REDESMA-01',
+                    title:            'Patient Vital Monitoring',
+                    subtitle:         'ICU UNIT 04 - CENTRAL SYSTEM ACTIVE',
+                    aq_title:         'Heart Rate',
+                    aq_desc:          'Normal Sinus',
+                    temp_title:       'Body Temp',
+                    temp_desc:        'Stable Status',
+                    hum_title:        'SpO2',
+                    hum_desc:         'Optimal Saturation',
+                    co2_title:        'Blood Pressure',
+                    co2_desc_critical:'Hypertensive Crisis',
+                    co2_desc_stable:  'Normotensive Range',
+                    chart_title:      'Vital Sign Trends (24h)',
+                    sensor:           'PATIENT ID: RD-00124',
                 },
                 id: {
                     theme_light:      'Terang',
                     theme_dark:       'Gelap',
-                    title:            'Ikhtisar Lingkungan',
-                    subtitle:         'PEMANTAUAN REAL-TIME AKTIF',
-                    aq_title:         'Kualitas Udara',
-                    aq_desc:          'Rentang Optimal',
-                    temp_title:       'Suhu',
-                    temp_desc:        'Suhu Stabil',
-                    hum_title:        'Kelembapan',
-                    hum_desc:         'Rentang Optimal',
-                    co2_title:        'Kadar CO2',
-                    co2_desc_critical:'Peringatan Kritis',
-                    co2_desc_stable:  'Rentang Stabil',
-                    chart_title:      'Tren Kualitas Udara 24 Jam',
-                    sensor:           'TITIK SENSOR: REDESMA-01',
+                    title:            'Pemantauan Vital Pasien',
+                    subtitle:         'UNIT ICU 04 - SISTEM PUSAT AKTIF',
+                    aq_title:         'Detak Jantung',
+                    aq_desc:          'Sinus Normal',
+                    temp_title:       'Suhu Tubuh',
+                    temp_desc:        'Status Stabil',
+                    hum_title:        'SpO2',
+                    hum_desc:         'Saturasi Optimal',
+                    co2_title:        'Tekanan Darah',
+                    co2_desc_critical:'Kris. Hipertensi',
+                    co2_desc_stable:  'Rentang Normal',
+                    chart_title:      'Tren Tanda Vital (24 Jam)',
+                    sensor:           'ID PASIEN: RD-00124',
                 },
             };
 
