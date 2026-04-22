@@ -5,7 +5,70 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* Class-based dark mode: applies when any ancestor has the .dark class */
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Smooth transitions on theme switch (excluding transform to avoid hover jitter) */
+@layer base {
+    * {
+        transition-property: background-color, color, border-color, box-shadow;
+        transition-duration: 300ms;
+        transition-timing-function: ease;
+    }
+}
+
+/* Body radial-gradient background (dark) */
+html.dark body {
+    background-image:
+        radial-gradient(circle at top right, rgba(30, 58, 138, 0.15), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(15, 23, 42, 0.8), transparent 40%);
+    background-attachment: fixed;
+}
+
+/* Body radial-gradient background (light) */
+html:not(.dark) body {
+    background-image:
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(241, 245, 249, 0.8), transparent 40%);
+    background-attachment: fixed;
+}
+
+/* Animated dot before the subtitle */
+.subtitle::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #10B981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10B981;
+    animation: pulse-dot 2s infinite;
+}
+
+/* ── Keyframe Animations ─────────────────────────────────── */
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+    0%   { box-shadow: 0 0 0 0   rgba(16, 185, 129, 0.7); }
+    70%  { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0   rgba(16, 185, 129, 0); }
+}
+
+@keyframes flash {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.5; }
 }
