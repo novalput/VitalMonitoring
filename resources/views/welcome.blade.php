@@ -30,19 +30,19 @@
             <button id="lang-toggle"
                 class="bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/5 text-slate-900 dark:text-white px-3 py-2 rounded-full font-['Outfit'] font-semibold text-sm cursor-pointer backdrop-blur-sm flex items-center gap-2 hover:bg-black/10 dark:hover:bg-white/20"
                 title="Switch language">
-                <!-- Flag image of the language you will switch TO -->
+                <!-- Flag image of the CURRENT language -->
                 <img id="lang-flag"
-                    src="https://flagcdn.com/w40/id.png"
-                    alt="Switch to Indonesian"
+                    src="https://flagcdn.com/w40/gb.png"
+                    alt="English"
                     class="w-6 h-auto rounded-sm shadow-sm">
-                <span id="lang-label" class="text-xs font-bold tracking-wider">ID</span>
+                <span id="lang-label" class="text-xs font-bold tracking-wider">EN</span>
             </button>
 
             <button id="theme-toggle"
                 class="bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/5 text-slate-900 dark:text-white px-4 py-2 rounded-full font-['Outfit'] font-semibold text-sm cursor-pointer backdrop-blur-sm flex items-center gap-2 hover:bg-black/10 dark:hover:bg-white/20"
                 title="Toggle Theme">
-                <i class="ph ph-sun text-xl" id="theme-icon"></i>
-                <span id="theme-text">Light</span>
+                <i class="ph ph-moon text-xl" id="theme-icon"></i>
+                <span id="theme-text">Dark</span>
             </button>
         </div>
 
@@ -107,7 +107,7 @@
 
                 <div class="flex justify-between items-start mb-4">
                     <div class="text-[2rem] leading-none text-cyan-500 dark:text-cyan-400 bg-cyan-500/10 p-3 rounded-2xl">
-                        <i class="ph ph-lungs"></i>
+                        <i class="ph ph-drop"></i>
                     </div>
                     <div class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white"
                         title="Normal"></div>
@@ -280,10 +280,10 @@
                 document.documentElement.classList.toggle('dark');
                 const isDark = document.documentElement.classList.contains('dark');
 
-                themeIcon.className  = isDark ? 'ph ph-sun text-xl' : 'ph ph-moon text-xl';
+                themeIcon.className  = isDark ? 'ph ph-moon text-xl' : 'ph ph-sun text-xl';
                 themeText.textContent = isDark
-                    ? translations[currentLang].theme_light
-                    : translations[currentLang].theme_dark;
+                    ? translations[currentLang].theme_dark
+                    : translations[currentLang].theme_light;
 
                 applyChartColors();
             });
@@ -326,11 +326,11 @@
                 },
             };
 
-            // Flags: country code of the language you will switch TO
+            // Flags: country code of the CURRENT language
             // flagcdn.com serves flags by ISO 3166-1 alpha-2 code
-            const langFlags  = { en: 'id', id: 'gb' };   // en → show 🇮🇩, id → show 🇬🇧
-            const langAlts   = { en: 'Switch to Indonesian', id: 'Switch to English' };
-            const langLabels = { en: 'ID', id: 'EN' };
+            const langFlags  = { en: 'gb', id: 'id' };   // en → show 🇬🇧, id → show 🇮🇩
+            const langAlts   = { en: 'English', id: 'Indonesian' };
+            const langLabels = { en: 'EN', id: 'ID' };
 
             let currentLang = 'en';
             const langToggleBtn = document.getElementById('lang-toggle');
@@ -359,7 +359,8 @@
                     : t.co2_desc_stable;
 
                 const isDark = document.documentElement.classList.contains('dark');
-                themeText.textContent = isDark ? t.theme_light : t.theme_dark;
+                themeIcon.className = isDark ? 'ph ph-moon text-xl' : 'ph ph-sun text-xl';
+                themeText.textContent = isDark ? t.theme_dark : t.theme_light;
 
                 // Update flag image to show the target language
                 langFlag.src          = `https://flagcdn.com/w40/${langFlags[currentLang]}.png`;
