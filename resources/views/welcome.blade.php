@@ -17,6 +17,9 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- MQTT.js -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -55,121 +58,9 @@
         </header>
 
         <!-- ── Sensor Cards ────────────────────────────────────── -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
-
-            <!-- Card 1: Air Quality -->
-            <div id="card-aq"
-                class="bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-6 flex flex-col shadow relative overflow-hidden opacity-0 animate-[fadeInUp_0.8s_ease-out_0.1s_forwards] hover:-translate-y-[5px] hover:shadow-[0_10px_25px_rgba(59,130,246,0.15)] hover:bg-white dark:hover:bg-[rgba(30,58,138,0.4)] transition-[box-shadow,background-color,border-color,transform] duration-300 cursor-default">
-
-                <div class="flex justify-between items-start mb-4">
-                    <div class="text-[2rem] leading-none text-red-500 dark:text-red-400 bg-red-500/10 p-3 rounded-2xl">
-                        <i class="ph ph-heartbeat"></i>
-                    </div>
-                    <div class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white"
-                        title="Normal"></div>
-                </div>
-
-                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-aq-title">Heart Rate</div>
-
-                <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
-                    <span id="val-aq">72</span>
-                    <span class="text-base text-slate-500 dark:text-slate-400 font-medium">BPM</span>
-                </div>
-
-                <div class="text-sm font-medium text-emerald-500" id="t-aq-desc">Normal Sinus</div>
-            </div>
-
-            <!-- Card 2: Temperature -->
-            <div id="card-temp"
-                class="bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-6 flex flex-col shadow relative overflow-hidden opacity-0 animate-[fadeInUp_0.8s_ease-out_0.2s_forwards] hover:-translate-y-[5px] hover:shadow-[0_10px_25px_rgba(59,130,246,0.15)] hover:bg-white dark:hover:bg-[rgba(30,58,138,0.4)] transition-[box-shadow,background-color,border-color,transform] duration-300 cursor-default">
-
-                <div class="flex justify-between items-start mb-4">
-                    <div class="text-[2rem] leading-none text-orange-500 dark:text-orange-400 bg-orange-500/10 p-3 rounded-2xl">
-                        <i class="ph ph-thermometer"></i>
-                    </div>
-                    <div class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white"
-                        title="Normal"></div>
-                </div>
-
-                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-temp-title">Body Temp</div>
-
-                <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
-                    <span id="val-temp">36.5</span>
-                    <span class="text-base text-slate-500 dark:text-slate-400 font-medium">°C</span>
-                </div>
-
-                <div class="text-sm font-medium text-blue-500 dark:text-blue-400" id="t-temp-desc">Stable</div>
-            </div>
-
-            <!-- Card 3: Humidity -->
-            <div id="card-hum"
-                class="bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-6 flex flex-col shadow relative overflow-hidden opacity-0 animate-[fadeInUp_0.8s_ease-out_0.3s_forwards] hover:-translate-y-[5px] hover:shadow-[0_10px_25px_rgba(59,130,246,0.15)] hover:bg-white dark:hover:bg-[rgba(30,58,138,0.4)] transition-[box-shadow,background-color,border-color,transform] duration-300 cursor-default">
-
-                <div class="flex justify-between items-start mb-4">
-                    <div class="text-[2rem] leading-none text-cyan-500 dark:text-cyan-400 bg-cyan-500/10 p-3 rounded-2xl">
-                        <i class="ph ph-drop"></i>
-                    </div>
-                    <div class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white"
-                        title="Normal"></div>
-                </div>
-
-                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-hum-title">SpO2</div>
-
-                <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
-                    <span id="val-hum">98</span>
-                    <span class="text-base text-slate-500 dark:text-slate-400 font-medium">%</span>
-                </div>
-
-                <div class="text-sm font-medium text-emerald-500" id="t-hum-desc">Optimal Saturation</div>
-            </div>
-
-            <!-- Card 4: CO2 Levels (Critical) -->
-            <div id="card-co2" data-critical="true"
-                class="bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-6 flex flex-col shadow relative overflow-hidden opacity-0 animate-[fadeInUp_0.8s_ease-out_0.4s_forwards] hover:-translate-y-[5px] hover:shadow-[0_10px_25px_rgba(59,130,246,0.15)] hover:bg-white dark:hover:bg-[rgba(30,58,138,0.4)] transition-[box-shadow,background-color,border-color,transform] duration-300 cursor-default">
-
-                <div class="flex justify-between items-start mb-4">
-                    <div id="co2-icon" class="text-[2rem] leading-none text-red-400 bg-red-500/10 p-3 rounded-2xl">
-                        <i class="ph ph-activity"></i>
-                    </div>
-                    <div id="co2-status-dot"
-                        class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-red-500 text-red-500 animate-[flash_1.5s_infinite]"
-                        title="Critical"></div>
-                </div>
-
-                <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-2" id="t-co2-title">Blood Pressure</div>
-
-                <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
-                    <span id="val-co2">145/95</span>
-                    <span class="text-base text-slate-500 dark:text-slate-400 font-medium">mmHg</span>
-                </div>
-
-                <div class="text-sm font-medium text-red-500" id="t-co2-desc">Hypertensive Alert</div>
-            </div>
-
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" id="cards-container">
+            <!-- Cards will be generated dynamically by JavaScript -->
         </div><!-- /cards-grid -->
-
-        <!-- ── Chart Section ───────────────────────────────────── -->
-        <section
-            class="bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-8 opacity-0 animate-[fadeInUp_0.8s_ease-out_0.6s_forwards] relative">
-
-            <div class="mb-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 gap-4 sm:gap-0">
-                    <h2 class="font-['Outfit'] text-2xl font-semibold" id="t-chart-title">24-Hour Air Quality Trend</h2>
-
-                    <div class="flex items-center gap-2 bg-blue-500/10 px-4 py-1.5 rounded-full border border-blue-500/15 text-sm font-semibold text-blue-500 dark:text-blue-400">
-                        <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-                        <span>PM 2.5</span>
-                    </div>
-                </div>
-
-                <div class="text-sm text-slate-500 dark:text-slate-400 tracking-[0.5px] uppercase font-semibold"
-                    id="t-sensor">SENSOR NODE: REDESMA-01</div>
-            </div>
-
-            <div class="relative h-[300px] md:h-[400px] w-full">
-                <canvas id="airQualityChart"></canvas>
-            </div>
-        </section>
 
     </div><!-- /container -->
 
@@ -177,99 +68,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-            // ── Chart Setup ────────────────────────────────────────
-            const ctx = document.getElementById('airQualityChart').getContext('2d');
-
-            function getChartColors() {
-                const isDark = document.documentElement.classList.contains('dark');
-                const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                gradient.addColorStop(0, isDark ? 'rgba(59, 130, 246, 0.5)' : 'rgba(37, 99, 235, 0.4)');
-                gradient.addColorStop(1, isDark ? 'rgba(59, 130, 246, 0.0)' : 'rgba(37, 99, 235, 0.0)');
-
-                return {
-                    gradient,
-                    borderColor:  isDark ? '#3B82F6' : '#2563EB',
-                    pointBg:      isDark ? '#0B0F19' : '#F1F5F9',
-                    gridColor:    isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
-                    textColor:    isDark ? '#94A3B8'  : '#64748B',
-                    tooltipBg:    isDark ? 'rgba(15,23,42,0.9)'     : 'rgba(255,255,255,0.95)',
-                    tooltipText:  isDark ? '#FFFFFF'  : '#0F172A',
-                };
-            }
-
-            const hours      = Array.from({ length: 24 }, (_, i) => `${i}:00`);
-            const dataPoints = [42, 45, 48, 50, 47, 44, 43, 41, 39, 38, 40, 42, 45, 49, 52, 55, 53, 50, 48, 46, 44, 45, 46, 45];
-
-            let chartColors = getChartColors();
-
-            let airQualityChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: hours,
-                    datasets: [{
-                        label: 'Heart Rate (BPM)',
-                        data: dataPoints,
-                        borderColor: chartColors.borderColor,
-                        backgroundColor: chartColors.gradient,
-                        borderWidth: 3,
-                        pointBackgroundColor: chartColors.pointBg,
-                        pointBorderColor: chartColors.borderColor,
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        fill: true,
-                        tension: 0.4,
-                    }],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: chartColors.tooltipBg,
-                            titleColor: chartColors.tooltipText,
-                            bodyColor: chartColors.textColor,
-                            borderColor: 'rgba(128,128,128,0.2)',
-                            borderWidth: 1,
-                            padding: 12,
-                            displayColors: false,
-                            callbacks: {
-                                label: (ctx) => `${ctx.parsed.y} BPM`,
-                            },
-                        },
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            grid: { color: chartColors.gridColor, drawBorder: false },
-                            ticks: { color: chartColors.textColor, padding: 10, font: { family: "'Inter', sans-serif", size: 11 } },
-                        },
-                        x: {
-                            grid: { display: false, drawBorder: false },
-                            ticks: { color: chartColors.textColor, maxTicksLimit: 12, padding: 10, font: { family: "'Inter', sans-serif", size: 11 } },
-                        },
-                    },
-                    interaction: { intersect: false, mode: 'index' },
-                },
-            });
-
-            // Helper: push new colors into chart and update
-            function applyChartColors() {
-                chartColors = getChartColors();
-                const ds = airQualityChart.data.datasets[0];
-                ds.borderColor            = chartColors.borderColor;
-                ds.backgroundColor        = chartColors.gradient;
-                ds.pointBackgroundColor   = chartColors.pointBg;
-                ds.pointBorderColor       = chartColors.borderColor;
-                airQualityChart.options.scales.x.ticks.color             = chartColors.textColor;
-                airQualityChart.options.scales.y.ticks.color             = chartColors.textColor;
-                airQualityChart.options.scales.y.grid.color              = chartColors.gridColor;
-                airQualityChart.options.plugins.tooltip.backgroundColor  = chartColors.tooltipBg;
-                airQualityChart.options.plugins.tooltip.titleColor       = chartColors.tooltipText;
-                airQualityChart.options.plugins.tooltip.bodyColor        = chartColors.textColor;
-                airQualityChart.update();
-            }
+            // ── Mini Charts Setup ──────────────────────────────────
+            const miniCharts = {};
+            const miniChartData = {};
 
             // ── Theme Toggle ───────────────────────────────────────
             const themeToggleBtn = document.getElementById('theme-toggle');
@@ -284,9 +85,168 @@
                 themeText.textContent = isDark
                     ? translations[currentLang].theme_dark
                     : translations[currentLang].theme_light;
-
-                applyChartColors();
             });
+
+            // ── Dynamic Sensor Configuration ───────────────────────
+            const SENSOR_CONFIG = {
+                'Sensor_Modbus_1_HeartRate': {
+                    icon: 'ph-heartbeat', colorTheme: 'red', unit: 'BPM',
+                    title: { en: 'Heart Rate', id: 'Detak Jantung' },
+                    desc: { en: 'Normal Sinus', id: 'Sinus Normal' },
+                    thresholds: { min: 60, max: 100 },
+                    descCritical: { en: 'Abnormal Rate', id: 'Detak Abnormal' }
+                },
+                'Sensor_Modbus_1_BodyTemp': {
+                    icon: 'ph-thermometer', colorTheme: 'orange', unit: '°C',
+                    title: { en: 'Body Temp', id: 'Suhu Tubuh' },
+                    desc: { en: 'Stable', id: 'Stabil' },
+                    thresholds: { min: 36.0, max: 37.5 },
+                    descCritical: { en: 'Temperature Alert', id: 'Peringatan Suhu' }
+                },
+                'Sensor_Modbus_1_SpO2': {
+                    icon: 'ph-drop', colorTheme: 'cyan', unit: '%',
+                    title: { en: 'SpO2', id: 'SpO2' },
+                    desc: { en: 'Optimal Saturation', id: 'Saturasi Optimal' },
+                    thresholds: { min: 95, max: 100 },
+                    descCritical: { en: 'Low Saturation', id: 'Saturasi Rendah' }
+                },
+                'Sensor_Modbus_1_EKG': {
+                    icon: 'ph-waveform', colorTheme: 'purple', unit: 'ms',
+                    title: { en: 'EKG', id: 'EKG' },
+                    desc: { en: 'Stable', id: 'Stabil' }
+                },
+                'Sensor_Modbus_1_CombinedBP': {
+                    icon: 'ph-activity', colorTheme: 'blue', unit: 'mmHg',
+                    title: { en: 'Blood Pressure', id: 'Tekanan Darah' },
+                    desc: { en: 'SYS / DIA', id: 'SYS / DIA' }
+                },
+                'Sensor_Modbus_1_Elektrodermal': {
+                    icon: 'ph-lightning', colorTheme: 'emerald', unit: 'µS',
+                    title: { en: 'Electrodermal', id: 'Elektrodermal' },
+                    desc: { en: 'Skin Conductance', id: 'Konduktansi Kulit' }
+                }
+            };
+
+            const THEMES = {
+                red: { text: 'text-red-500 dark:text-red-400', bg: 'bg-red-500/10' },
+                orange: { text: 'text-orange-500 dark:text-orange-400', bg: 'bg-orange-500/10' },
+                cyan: { text: 'text-cyan-500 dark:text-cyan-400', bg: 'bg-cyan-500/10' },
+                blue: { text: 'text-blue-500 dark:text-blue-400', bg: 'bg-blue-500/10' },
+                purple: { text: 'text-purple-500 dark:text-purple-400', bg: 'bg-purple-500/10' },
+                pink: { text: 'text-pink-500 dark:text-pink-400', bg: 'bg-pink-500/10' },
+                default: { text: 'text-emerald-500 dark:text-emerald-400', bg: 'bg-emerald-500/10' }
+            };
+
+            const cardsContainer = document.getElementById('cards-container');
+
+            function renderCard(sensorKey, value) {
+                let card = document.getElementById(`card-${sensorKey}`);
+                const config = SENSOR_CONFIG[sensorKey] || {
+                    icon: 'ph-pulse', colorTheme: 'default', unit: '',
+                    title: { en: sensorKey.replace('Sensor_', ''), id: sensorKey.replace('Sensor_', '') },
+                    desc: { en: 'Monitoring', id: 'Memantau' }
+                };
+                const theme = THEMES[config.colorTheme] || THEMES.default;
+
+                if (!card) {
+                    card = document.createElement('div');
+                    card.id = `card-${sensorKey}`;
+                    card.className = `bg-white/80 dark:bg-[rgba(22,33,62,0.6)] backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[1.25rem] p-6 flex flex-col shadow relative overflow-hidden opacity-0 animate-[fadeInUp_0.8s_ease-out_forwards] hover:-translate-y-[5px] hover:shadow-[0_10px_25px_rgba(59,130,246,0.15)] hover:bg-white dark:hover:bg-[rgba(30,58,138,0.4)] transition-[box-shadow,background-color,border-color,transform] duration-300 cursor-default`;
+                    const childCount = cardsContainer.children.length;
+                    card.style.animationDelay = `${0.1 + (childCount * 0.1)}s`;
+
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="text-[2rem] leading-none ${theme.text} ${theme.bg} p-3 rounded-2xl">
+                                <i class="ph ${config.icon}"></i>
+                            </div>
+                            <div class="status-dot w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white" title="Normal"></div>
+                        </div>
+                        <div class="text-base text-slate-500 dark:text-slate-400 font-medium mb-1" id="title-${sensorKey}"></div>
+                        <div class="font-['Outfit'] text-[2.25rem] font-bold mb-1 flex items-baseline gap-1">
+                            <span id="val-${sensorKey}">${value !== undefined ? value : '--'}</span>
+                            <span class="text-base text-slate-500 dark:text-slate-400 font-medium">${config.unit}</span>
+                        </div>
+                        <div class="text-sm font-medium text-emerald-500 mb-2" id="desc-${sensorKey}"></div>
+                        ${sensorKey !== 'Sensor_Modbus_1_CombinedBP' ? `<div class="relative h-12 w-full mt-auto"><canvas id="mini-chart-${sensorKey}"></canvas></div>` : ''}
+                    `;
+                    cardsContainer.appendChild(card);
+
+                    // Initialize Mini Chart
+                    if (sensorKey !== 'Sensor_Modbus_1_CombinedBP') {
+                        miniChartData[sensorKey] = { labels: [], data: [] };
+                        const ctxCard = document.getElementById(`mini-chart-${sensorKey}`).getContext('2d');
+                        
+                        const isDark = document.documentElement.classList.contains('dark');
+                        let hexColor = isDark ? '#10B981' : '#059669';
+                        if (config.colorTheme === 'red') hexColor = '#EF4444';
+                        if (config.colorTheme === 'orange') hexColor = '#F97316';
+                        if (config.colorTheme === 'cyan') hexColor = '#06B6D4';
+                        if (config.colorTheme === 'blue') hexColor = '#3B82F6';
+                        if (config.colorTheme === 'purple') hexColor = '#A855F7';
+                        if (config.colorTheme === 'pink') hexColor = '#EC4899';
+                        
+                        const gradient = ctxCard.createLinearGradient(0, 0, 0, 50);
+                        gradient.addColorStop(0, hexColor + '40'); // 25% opacity
+                        gradient.addColorStop(1, hexColor + '00'); // 0% opacity
+
+                        miniCharts[sensorKey] = new Chart(ctxCard, {
+                            type: 'line',
+                            data: {
+                                labels: miniChartData[sensorKey].labels,
+                                datasets: [{
+                                    data: miniChartData[sensorKey].data,
+                                    borderColor: hexColor,
+                                    backgroundColor: gradient,
+                                    borderWidth: 2,
+                                    pointRadius: 0,
+                                    pointHoverRadius: 3,
+                                    tension: 0.4,
+                                    fill: true
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                                scales: { x: { display: false }, y: { display: false } },
+                                layout: { padding: 0 }
+                            }
+                        });
+                    }
+                } else if (value !== undefined) {
+                    document.getElementById(`val-${sensorKey}`).textContent = value;
+                }
+
+                // Translations and Thresholds
+                const tTitle = document.getElementById(`title-${sensorKey}`);
+                const tDesc = document.getElementById(`desc-${sensorKey}`);
+                const dot = card.querySelector('.status-dot');
+
+                if (tTitle) tTitle.textContent = config.title[currentLang] || config.title.en;
+                
+                let currentDesc = config.desc[currentLang] || config.desc.en;
+                let isCritical = false;
+
+                if (value !== undefined && config.thresholds) {
+                    const numVal = parseFloat(value);
+                    if (!isNaN(numVal) && (numVal < config.thresholds.min || numVal > config.thresholds.max)) {
+                        isCritical = true;
+                        currentDesc = config.descCritical ? (config.descCritical[currentLang] || config.descCritical.en) : currentDesc;
+                    }
+                }
+
+                if (tDesc) {
+                    tDesc.textContent = currentDesc;
+                    if (isCritical) {
+                        tDesc.className = 'text-sm font-medium text-red-500';
+                        dot.className = 'status-dot w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-red-500 text-red-500 animate-[flash_1.5s_infinite]';
+                    } else {
+                        tDesc.className = 'text-sm font-medium text-emerald-500';
+                        dot.className = 'status-dot w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white';
+                    }
+                }
+            }
 
             // ── Translations ───────────────────────────────────────
             const translations = {
@@ -295,16 +255,7 @@
                     theme_dark:       'Dark',
                     title:            'Patient Vital Monitoring',
                     subtitle:         'ICU UNIT 04 - CENTRAL SYSTEM ACTIVE',
-                    aq_title:         'Heart Rate',
-                    aq_desc:          'Normal Sinus',
-                    temp_title:       'Body Temp',
-                    temp_desc:        'Stable Status',
-                    hum_title:        'SpO2',
-                    hum_desc:         'Optimal Saturation',
-                    co2_title:        'Blood Pressure',
-                    co2_desc_critical:'Hypertensive Crisis',
-                    co2_desc_stable:  'Normotensive Range',
-                    chart_title:      'Vital Sign Trends (24h)',
+                    chart_title:      'Real-time Heart Rate Trend',
                     sensor:           'PATIENT ID: RD-00124',
                 },
                 id: {
@@ -312,16 +263,7 @@
                     theme_dark:       'Gelap',
                     title:            'Pemantauan Vital Pasien',
                     subtitle:         'UNIT ICU 04 - SISTEM PUSAT AKTIF',
-                    aq_title:         'Detak Jantung',
-                    aq_desc:          'Sinus Normal',
-                    temp_title:       'Suhu Tubuh',
-                    temp_desc:        'Status Stabil',
-                    hum_title:        'SpO2',
-                    hum_desc:         'Saturasi Optimal',
-                    co2_title:        'Tekanan Darah',
-                    co2_desc_critical:'Kris. Hipertensi',
-                    co2_desc_stable:  'Rentang Normal',
-                    chart_title:      'Tren Tanda Vital (24 Jam)',
+                    chart_title:      'Tren Detak Jantung (Real-time)',
                     sensor:           'ID PASIEN: RD-00124',
                 },
             };
@@ -340,23 +282,8 @@
             // Apply all UI strings for `currentLang`
             function applyTranslations() {
                 const t = translations[currentLang];
-
                 document.getElementById('t-title').textContent       = t.title;
                 document.getElementById('t-subtitle').textContent    = t.subtitle;
-                document.getElementById('t-aq-title').textContent    = t.aq_title;
-                document.getElementById('t-aq-desc').textContent     = t.aq_desc;
-                document.getElementById('t-temp-title').textContent  = t.temp_title;
-                document.getElementById('t-temp-desc').textContent   = t.temp_desc;
-                document.getElementById('t-hum-title').textContent   = t.hum_title;
-                document.getElementById('t-hum-desc').textContent    = t.hum_desc;
-                document.getElementById('t-co2-title').textContent   = t.co2_title;
-                document.getElementById('t-chart-title').textContent = t.chart_title;
-                document.getElementById('t-sensor').textContent      = t.sensor;
-
-                const isCo2Critical = document.getElementById('card-co2').getAttribute('data-critical') === 'true';
-                document.getElementById('t-co2-desc').textContent = isCo2Critical
-                    ? t.co2_desc_critical
-                    : t.co2_desc_stable;
 
                 const isDark = document.documentElement.classList.contains('dark');
                 themeIcon.className = isDark ? 'ph ph-moon text-xl' : 'ph ph-sun text-xl';
@@ -366,12 +293,23 @@
                 langFlag.src          = `https://flagcdn.com/w40/${langFlags[currentLang]}.png`;
                 langFlag.alt          = langAlts[currentLang];
                 langLabel.textContent = langLabels[currentLang];
+
+                // Update dynamic cards translations
+                const activeCards = document.querySelectorAll('[id^="card-"]');
+                activeCards.forEach(card => {
+                    const sensorKey = card.id.replace('card-', '');
+                    renderCard(sensorKey);
+                });
             }
 
             // ── Auto-detect browser language on first load ─────────
             (function detectLang() {
                 const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
                 currentLang = browserLang.startsWith('id') ? 'id' : 'en';
+                
+                // Initialize default cards
+                Object.keys(SENSOR_CONFIG).forEach(key => renderCard(key));
+
                 applyTranslations();
             })();
 
@@ -381,35 +319,105 @@
                 applyTranslations();
             });
 
+            let currentSystolic = '--';
+            let currentDiastolic = '--';
+
             // ── Data Updater (for DB / MQTT hook-in) ──────────────
             window.updateDashboardData = function (data) {
-                if (data.airQuality  !== undefined) document.getElementById('val-aq').textContent   = data.airQuality;
-                if (data.temperature !== undefined) document.getElementById('val-temp').textContent = data.temperature;
-                if (data.humidity    !== undefined) document.getElementById('val-hum').textContent  = data.humidity;
+                let shouldUpdateBP = false;
 
-                if (data.co2 !== undefined) {
-                    document.getElementById('val-co2').textContent = data.co2;
+                for (let [key, value] of Object.entries(data)) {
+                    // Sesuaikan key (misal 'HeartRate' menjadi 'Sensor_HeartRate')
+                    let sensorKey = key.startsWith('Sensor_') ? key : 'Sensor_' + key;
+                    
+                    // Format khusus untuk Suhu jika perlu (misal 302 -> 30.2)
+                    if (sensorKey === 'Sensor_Modbus_1_BodyTemp' && value > 100) {
+                        value = (value / 10).toFixed(1);
+                    }
 
-                    const co2Card = document.getElementById('card-co2');
-                    const co2Dot  = document.getElementById('co2-status-dot');
-                    const co2Desc = document.getElementById('t-co2-desc');
-                    const co2Icon = document.getElementById('co2-icon');
+                    // Tangani Blood Pressure agar digabung
+                    if (sensorKey === 'Sensor_Modbus_1_BloodPreassure') {
+                        currentDiastolic = value;
+                        shouldUpdateBP = true;
+                    } else if (sensorKey === 'Sensor_Modbus_1_BloodPreassure2') {
+                        currentSystolic = value;
+                        shouldUpdateBP = true;
+                    } else if (SENSOR_CONFIG[sensorKey]) {
+                        // Update kartu lainnya
+                        renderCard(sensorKey, value);
 
-                    if (data.co2 < 800) {
-                        co2Card.setAttribute('data-critical', 'false');
-                        co2Dot.className  = 'w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-emerald-500 text-emerald-500 dark:bg-white dark:text-white';
-                        co2Desc.className = 'text-sm font-medium text-blue-500 dark:text-blue-400';
-                        co2Desc.textContent = translations[currentLang].co2_desc_stable;
-                        co2Icon.className = 'text-[2rem] leading-none text-blue-500 dark:text-blue-400 bg-blue-500/10 p-3 rounded-2xl';
-                    } else {
-                        co2Card.setAttribute('data-critical', 'true');
-                        co2Dot.className  = 'w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-red-500 text-red-500 animate-[flash_1.5s_infinite]';
-                        co2Desc.className = 'text-sm font-medium text-red-500';
-                        co2Desc.textContent = translations[currentLang].co2_desc_critical;
-                        co2Icon.className = 'text-[2rem] leading-none text-red-400 bg-red-500/10 p-3 rounded-2xl';
+                        // Update mini chart
+                        if (miniCharts[sensorKey] && value !== undefined) {
+                            const numVal = parseFloat(value);
+                            if (!isNaN(numVal)) {
+                                miniChartData[sensorKey].labels.push('');
+                                miniChartData[sensorKey].data.push(numVal);
+                                if (miniChartData[sensorKey].labels.length > 20) {
+                                    miniChartData[sensorKey].labels.shift();
+                                    miniChartData[sensorKey].data.shift();
+                                }
+                                miniCharts[sensorKey].update('none');
+                            }
+                        }
                     }
                 }
+
+                // Render Blood Pressure gabungan
+                if (shouldUpdateBP) {
+                    renderCard('Sensor_Modbus_1_CombinedBP', `${currentSystolic} / ${currentDiastolic}`);
+                }
             };
+
+            // ── MQTT Connection to broker.hivemq.com ──────────────
+            const brokerUrl = 'wss://broker.hivemq.com:8884/mqtt';
+            const topic = 'data/HMIRSPAL/Sensor/1234';
+            const clientId = 'dashboard_' + Math.random().toString(16).substr(2, 8);
+
+            console.log('Connecting to MQTT Broker:', brokerUrl);
+            const client = mqtt.connect(brokerUrl, {
+                clientId: clientId,
+                clean: true,
+                connectTimeout: 4000,
+                reconnectPeriod: 1000,
+            });
+
+            client.on('connect', function () {
+                console.log('Connected to MQTT broker successfully!');
+                client.subscribe(topic, function (err) {
+                    if (!err) {
+                        console.log('Subscribed to topic:', topic);
+                    } else {
+                        console.error('Subscription error:', err);
+                    }
+                });
+            });
+
+            client.on('message', function (t, message) {
+                try {
+                    const payload = message.toString();
+                    
+                    // Attempt to parse as JSON first
+                    try {
+                        const data = JSON.parse(payload);
+                        window.updateDashboardData(data);
+                    } catch (e) {
+                        // Not JSON, assume it's a raw value from a wildcard topic (e.g. data/HMIRSPAL/Sensor/Sensor_HeartRate)
+                        const topicParts = t.split('/');
+                        let sensorKey = topicParts[topicParts.length - 1];
+                        
+                        // Fallback: If the topic just says 'HeartRate' without 'Sensor_', we can prefix it
+                        if (!sensorKey.startsWith('Sensor_')) {
+                            sensorKey = 'Sensor_' + sensorKey;
+                        }
+                        
+                        const data = {};
+                        data[sensorKey] = payload;
+                        window.updateDashboardData(data);
+                    }
+                } catch (e) {
+                    console.error('Error handling MQTT message:', e);
+                }
+            });
 
         });
     </script>
